@@ -19,8 +19,8 @@ window.addEventListener('load', ()=> {
             //acts as proxy and allows to make requests from localhost
             const proxy = "https://cors-anywhere.herokuapp.com/";
             
-            //API call using latitude and longitude 
-            const api = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=396a75a72e9410a70f072df5bec1b9ca`;
+        /********************************* OpenWeatherMap API *********************************/     
+            const api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=owm_API`;
         
             fetch(api)                                                                  //when fetch information succesful, 
                 .then(response => {
@@ -56,24 +56,9 @@ window.addEventListener('load', ()=> {
 
 
             
-/////////////////////////////////// Google Maps API  ///////////////////////////////////     
-/*
-            let parks = document.querySelector(".walk");
-            let map;
-            let pos;
-            
-            pos = {lat: ${latitude}, lng: ${longitude}};
-          
-            function initMap() {
-                
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: pos,
-                    zoom: 15;
-                });
-            }
-*/
-            //API call  
-            const apiloc = `${proxy}https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}, ${longitude}&radius=1700&type=park&keyword=walk&key=AIzaSyCIt2PouMjpZho8KXPm0uLW2O7rc143FP0`;
+/********************************* Google Maps API *********************************/     
+
+            const apiloc = `${proxy}https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude}, ${longitude}&radius=1700&type=park&keyword=walk&key=gp_API`;
 
             var s = [];
             var obj;
@@ -88,37 +73,18 @@ window.addEventListener('load', ()=> {
                    
                 for(i in json) {
                     s += json[i].name + "\n";
-                }
-                
-                    places.textContent = s + "\n\n";
-                                
-                });
-                                                                     
-        });     //geolocations ends   
-        
-    } //if navigator.geolocation
+                }          
+                    places.textContent = s + "\n\n";               
+                });                 
+        });                                                                         //geolocations ends  
+    }                                                                               //if navigator.geolocation
     
-    
-    //if not, ask user to enable locations
-    else {
+                                                                                    
+    else {                                                                          //if not, notify user
         h1.textContent = "Hey! You have disabled your locations services!"
     }
-
-    /*
-    function setBGImage(tempdesc) {    
-        var x = tempdesc.includes("clear");
-        var num = x.equals("clear");
-        
-        if(x === true ) {
-        console.log(x);
-        document.body.style.background = "url('cooking.jpg')";
-    }
-}*/
-
-
     
-    ///////////////////////////////////////////////////////////////////////////////
-
+    
 //DOM Elements
 
 const time = document.getElementById('time'),
@@ -126,7 +92,7 @@ const time = document.getElementById('time'),
       name = document.getElementById('name'),      
       focus = document.getElementById('focus');
 
-//Show Time
+/********************************* Define functions *********************************/
 
 function showTime() {
     let today = new Date(),
@@ -156,50 +122,42 @@ function setBackground() {
     let today = new Date(),
         hour = today.getHours();
 
-    if(hour < 6){
-        //Morning
+    if(hour < 6){                                                                   //morning - dark
         greeting.textContent = 'Good Morning';
         document.body.style.backgroundImage = "url('img/dawn.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
-    if(hour < 9){
-        //Morning
+    if(hour < 9){                                                                   //early morning
         greeting.textContent = 'Good Morning';
         document.body.style.backgroundImage = "url('img/morning-clear.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
-    else if(hour < 12) {
-        //Afternoon
+    else if(hour < 12) {                                                            //late morning
         greeting.textContent = 'Good Morning';
         document.body.style.backgroundImage = "url('img/clear_sky.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
-    else if(hour < 18) {
-        //Afternoon
+    else if(hour < 18) {                                                            //afternoon
         greeting.textContent = 'Good Afternoon';
         document.body.style.backgroundImage = "url('img/clear_sky_noon.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
     
-    else if(hour < 21) {
-        //Afternoon
+    else if(hour < 21) {                                                            //evening
         greeting.textContent = 'Good Evening';
         document.body.style.backgroundImage = "url('img/dusk-clear-w.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
 
-    else {
-        //Evening
+    else {                                                                          //night
         greeting.textContent = 'Good Evening';
         document.body.style.backgroundImage = "url('img/night-clear.jpg')";
         document.body.style.backgroundRepeat = "no-repeat";
     }
 }
     
-//Run
+//Call functions
 showTime();
-setBackground();
-//setBGImage();
-        
+setBackground();        
 
 });
